@@ -1,0 +1,82 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Pytest
+.pytest_cache/
+.cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Logs and local dumps
+*.log
+*.pot
+*.pid
+*.dump
+
+# Local dev artifacts
+.env
+.env.*
+.envrc
+*.sqlite3
+instance/
+!.env.example
+
+# Docker
+*.tar
+**/__docker_cache__/
+docker-compose.override.yml
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+*.manifest
+*.spec
+
+# Wheels
+*.whl
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# MinIO local data (if in repo)
+minio-data/
+
+# Postgres volume (if in repo)
+pg_data/
+fastapi-postgres-data/
+
+# System files
+.DS_Store
+Thumbs.db

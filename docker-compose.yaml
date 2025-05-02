@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend-fastapi
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - fastapi-postgres
+    environment:
+      MINIO_URL: localhost:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET_NAME: upload
+      MICRO_SERVICE_URL: http://localhost:8001
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      POSTGRES_URL: postgresql://fastapi_user:fastapi_pass@fastapi-postgres:5432/fastapi_db
+    restart: unless-stopped
+
+  microservice:
+    container_name: microservice-fastapi
+    build:
+      context: ./microservice
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    depends_on:
+      - fastapi-postgres
+    environment:
+      UNSTRUCTURED_API_KEY: ${UNSTRUCTURED_API_KEY}
+      POSTGRES_URL: postgresql://fastapi_user:fastapi_pass@fastapi-postgres:5432/fastapi_db
+    restart: unless-stopped
+
+  fastapi-postgres:
+    container_name: container-fastapi-pg
+    image: pgvector/pgvector:pg17
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: fastapi_user
+      POSTGRES_PASSWORD: fastapi_pass
+      POSTGRES_DB: fastapi_db
+    volumes:
+      - fastapi-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  minio:
+    image: bitnami/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./minio-data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+
+  frontend:
+    container_name: vite-react-front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+      - microservice
+    environment:
+      VITE_API_URL: http://localhost:8000
+    restart: unless-stopped
+
+volumes:
+  fastapi-postgres-data:
+    driver: local
