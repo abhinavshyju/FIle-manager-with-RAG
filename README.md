@@ -1,6 +1,6 @@
 # 📁 File Manager with RAG
 
-An AI-powered file management system that leverages Retrieval-Augmented Generation (RAG) to enable intelligent document search and interaction.
+An AI-powered file management system that leverages Retrieval-Augmented Generation (RAG) to enable intelligent interaction.
 
 ---
 
