@@ -85,7 +85,7 @@ The system is structured into three main components:
 3.  **Configure Microservice**:
     
     ```bash
-    cd ../microservice
+    cd ./microservice
     cp .env.example .env
     
     ```
@@ -112,7 +112,7 @@ The system is structured into three main components:
 4.  **Configure Frontend**:
     
     ```bash
-    cd ../frontend
+    cd ./frontend
     cp .env.example .env
     
     ```
